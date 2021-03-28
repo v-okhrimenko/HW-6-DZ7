@@ -1,5 +1,4 @@
-public class Phone {
-
+public class Phone implements Comparable<Phone> {
     private int id;
     private String surname;
     private String firstName;
@@ -70,6 +69,10 @@ public class Phone {
         this.address = address;
     }
 
+    public void setAddress(String country, String city, String street, String buildNumb, int appNumb) {
+        this.address = new Address(country, city, street, buildNumb, appNumb);
+    }
+
     public String getTelephoneNumber() {
         return telephoneNumber;
     }
@@ -78,7 +81,7 @@ public class Phone {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public double getCreditCardNumber() {
+    public int getCreditCardNumber() {
         return creditCardNumber;
     }
 
@@ -86,7 +89,7 @@ public class Phone {
         this.creditCardNumber = creditCardNumber;
     }
 
-    public double getDebit() {
+    public int getDebit() {
         return debit;
     }
 
@@ -94,7 +97,7 @@ public class Phone {
         this.debit = debit;
     }
 
-    public double getCredit() {
+    public int getCredit() {
         return credit;
     }
 
@@ -102,7 +105,7 @@ public class Phone {
         this.credit = credit;
     }
 
-    public double getTimeLocalCall() {
+    public int getTimeLocalCall() {
         return timeLocalCall;
     }
 
@@ -110,7 +113,7 @@ public class Phone {
         this.timeLocalCall = timeLocalCall;
     }
 
-    public double getTimeNoLocalCall() {
+    public int getTimeNoLocalCall() {
         return timeNoLocalCall;
     }
 
@@ -118,7 +121,7 @@ public class Phone {
         this.timeNoLocalCall = timeNoLocalCall;
     }
 
-    public double getTraffic() {
+    public int getTraffic() {
         return traffic;
     }
 
@@ -127,23 +130,91 @@ public class Phone {
     }
 
     @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+
+    public int compareTo(Phone p) {
+        return getSurname().compareTo(p.getSurname());
+    }
+
+    @Override
     public String toString() {
-        return
-                "id=" + id + '\n' +
-                        "ФИО: " + surname + " " + firstName + " " + patronymic + '\n' +
-                        "Адресс: " + address + '\n' +
-                        "Телефон: " + telephoneNumber + '\n' +
-                        "Кредитная карта: " + creditCardNumber + '\n' +
-                        "Дебет: " + debit + '\n' +
-                        "Кредит: " + credit + '\n' +
-                        "Внутрисетевые звонки: " + timeLocalCall + '\n' +
-                        "За пределами сети: " + timeNoLocalCall + '\n' +
-                        "Траффик: " + traffic + "мб";
+        return "id=" + id + '\n' +
+                "ФИО: " + surname + " " + firstName + " " + patronymic + '\n' +
+                "Адресс: " + address + '\n' +
+                "Телефон: " + telephoneNumber + '\n' +
+                "Кредитная карта: " + creditCardNumber + '\n' +
+                "Дебет: " + debit + '\n' +
+                "Кредит: " + credit + '\n' +
+                "Внутрисетевые звонки: " + timeLocalCall + '\n' +
+                "За пределами сети: " + timeNoLocalCall + '\n' +
+                "Траффик: " + traffic + "мб";
     }
 
+    static class Address {
+        private String country;
+        private String city;
+        private String street;
+        private String buildNumb;
+        private int appNumb;
 
-    public void setAddress(String country, String city, String street, String buildNumb, int appNumb) {
-        this.address = new Address(country, city, street, buildNumb, appNumb);
+        public Address() {
+        }
+
+        public Address(String country, String city, String street, String buildNumb, int appNumb) {
+            this.country = country;
+            this.city = city;
+            this.street = street;
+            this.buildNumb = buildNumb;
+            this.appNumb = appNumb;
+        }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public void setCountry(String country) {
+            this.country = country;
+        }
+
+        public String getCity() {
+            return city;
+        }
+
+        public void setCity(String city) {
+            this.city = city;
+        }
+
+        public String getStreet() {
+            return street;
+        }
+
+        public void setStreet(String street) {
+            this.street = street;
+        }
+
+        public String getBuildNumb() {
+            return buildNumb;
+        }
+
+        public void setBuildNumb(String buildNumb) {
+            this.buildNumb = buildNumb;
+        }
+
+        public int getAppNumb() {
+            return appNumb;
+        }
+
+        public void setAppNumb(int appNumb) {
+            this.appNumb = appNumb;
+        }
+
+        @Override
+        public String toString() {
+            return country + ", " + city + ", " + street + ", " +
+                    "д." + buildNumb + ", " +
+                    "кв." + appNumb;
+        }
     }
-
 }
