@@ -1,9 +1,8 @@
-import java.util.ArrayList;
 
 public interface PhoneMetods {
-    ArrayList<Phone> getCustomerUseNoLocalCall();
+    void getCustomersUsedNoLocalCall();
 
-    ArrayList<Phone> getCustomerMoreLocalCall(int time);
+    void getCustomersUsedNoLocalCallMoreThan(int time);
 
-    ArrayList<Phone> sortCustomerByName();
+    void sortCustomerByName() throws CloneNotSupportedException;
 }
