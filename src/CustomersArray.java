@@ -1,52 +1,69 @@
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
-public class CustomersArray implements PhoneMetods {
-    private final static ArrayList<Phone> customersArray = new ArrayList<>();
-    private static int count;
+public class CustomersArray implements PhoneMetods, Cloneable {
+    private final static Phone[] customersArray = new Phone[10000];
+    private static int id = 0;
 
     public void saveCustomer(Phone phone) {
-        phone.setId(count);
-        customersArray.add(phone);
-        count++;
+        if (Objects.nonNull(phone)) {
+            if (Objects.nonNull(phone.getSurname())) {
+                phone.setId(id);
+                customersArray[id] = phone;
+                id++;
+            } else {
+                System.out.println("Не возможно сохранить пустой обьект");
+            }
+        } else {
+            System.out.println("Не возможно сохранить NULL");
+        }
+
     }
 
     @Override
-    public ArrayList<Phone> getCustomerUseNoLocalCall() {
-        ArrayList<Phone> selectedCustomers = new ArrayList<>();
+    public void getCustomersUsedNoLocalCall() {
+        Phone[] temp = getCustomersArrayWithoutNull();
         System.out.println("Cведения об абонентах, которые пользовались междугородной связью: ");
-        for (int i = 0; i < count; i++) {
-            if (Objects.nonNull(customersArray.get(i))) {
-                if (customersArray.get(i).getTimeNoLocalCall() <= 0) {
-                    selectedCustomers.add(customersArray.get(i));
-                    System.out.println(customersArray.get(i));
+        for (int i = 0; i < id; i++) {
+            if (Objects.nonNull(temp[i])) {
+                if (temp[i].getTimeNoLocalCall() > 0) {
+                    System.out.println(temp[i]);
                     System.out.println("________________________");
                 }
             }
         }
-        return selectedCustomers;
     }
 
     @Override
-    public ArrayList<Phone> getCustomerMoreLocalCall(int time) {
-        ArrayList<Phone> selectedCustomers = new ArrayList<>();
-        System.out.println("сведения об абонентах, у которых время внутригородских разговоров превышает " + time + ":");
-        for (Phone phoneCustomers : customersArray) {
+    public void getCustomersUsedNoLocalCallMoreThan(int time) {
+        System.out.println("Cведения об абонентах, у которых время внутригородских разговоров превышает " + time + ":");
+        for (Phone phoneCustomers : getCustomersArrayWithoutNull()) {
             if (Objects.nonNull(phoneCustomers)) {
                 if (phoneCustomers.getTimeLocalCall() > time) {
-                    selectedCustomers.add(phoneCustomers);
                     System.out.println(phoneCustomers);
                     System.out.println("________________________");
                 }
             }
         }
-        return selectedCustomers;
     }
 
     @Override
-    public ArrayList<Phone> sortCustomerByName() {
+    public void sortCustomerByName() {
+        System.out.println("Cведения об абонентах в алфавитном порядке (по фамилии): ");
+        Phone[] sortedCustomersByName = getCustomersArrayWithoutNull();
+        Arrays.sort(sortedCustomersByName);
+        for (Phone phone : sortedCustomersByName) {
+            System.out.println(phone);
+            System.out.println("________________________");
+        }
+    }
 
-        return new ArrayList<>();
+    private Phone[] getCustomersArrayWithoutNull() {
+        Phone[] noNullArray = new Phone[id];
+        if (id >= 0) {
+            System.arraycopy(customersArray, 0, noNullArray, 0, id);
+        }
+        return noNullArray;
     }
 
 }
