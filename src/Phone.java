@@ -1,21 +1,21 @@
-public class Phone implements Comparable<Phone> {
+public class Phone implements Comparable<Phone>, Cloneable {
     private int id;
     private String surname;
     private String firstName;
     private String patronymic;
     private Address address;
     private String telephoneNumber;
-    private int creditCardNumber;
-    private int debit;
-    private int credit;
-    private int timeLocalCall;
-    private int timeNoLocalCall;
+    private String creditCardNumber;
+    private long debit;
+    private long credit;
+    private int innerCityCall;
+    private int longDistanceCall;
     private int traffic;
 
     public Phone() {
     }
 
-    public Phone(String surname, String firstName, String patronymic, Address address, String telephoneNumber, int creditCardNumber, int debit, int credit, int timeLocalCall, int timeNoLocalCall, int traffic) {
+    public Phone(String surname, String firstName, String patronymic, Address address, String telephoneNumber, String creditCardNumber, long debit, long credit, int innerCityCall, int longDistanceCall, int traffic) {
         this.surname = surname;
         this.firstName = firstName;
         this.patronymic = patronymic;
@@ -24,8 +24,8 @@ public class Phone implements Comparable<Phone> {
         this.creditCardNumber = creditCardNumber;
         this.debit = debit;
         this.credit = credit;
-        this.timeLocalCall = timeLocalCall;
-        this.timeNoLocalCall = timeNoLocalCall;
+        this.innerCityCall = innerCityCall;
+        this.longDistanceCall = longDistanceCall;
         this.traffic = traffic;
     }
 
@@ -69,7 +69,7 @@ public class Phone implements Comparable<Phone> {
         this.address = address;
     }
 
-    public void setAddress(String country, String city, String street, String buildNumb, int appNumb) {
+    public void setAddress(String country, String city, String street, String buildNumb, String appNumb) {
         this.address = new Address(country, city, street, buildNumb, appNumb);
     }
 
@@ -81,44 +81,44 @@ public class Phone implements Comparable<Phone> {
         this.telephoneNumber = telephoneNumber;
     }
 
-    public int getCreditCardNumber() {
+    public String getCreditCardNumber() {
         return creditCardNumber;
     }
 
-    public void setCreditCardNumber(int creditCardNumber) {
+    public void setCreditCardNumber(String creditCardNumber) {
         this.creditCardNumber = creditCardNumber;
     }
 
-    public int getDebit() {
+    public long getDebit() {
         return debit;
     }
 
-    public void setDebit(int debit) {
+    public void setDebit(long debit) {
         this.debit = debit;
     }
 
-    public int getCredit() {
+    public long getCredit() {
         return credit;
     }
 
-    public void setCredit(int credit) {
+    public void setCredit(long credit) {
         this.credit = credit;
     }
 
-    public int getTimeLocalCall() {
-        return timeLocalCall;
+    public int getInnerCityCall() {
+        return innerCityCall;
     }
 
-    public void setTimeLocalCall(int timeLocalCall) {
-        this.timeLocalCall = timeLocalCall;
+    public void setInnerCityCall(int innerCityCall) {
+        this.innerCityCall = innerCityCall;
     }
 
-    public int getTimeNoLocalCall() {
-        return timeNoLocalCall;
+    public int getLongDistanceCall() {
+        return longDistanceCall;
     }
 
-    public void setTimeNoLocalCall(int timeNoLocalCall) {
-        this.timeNoLocalCall = timeNoLocalCall;
+    public void setLongDistanceCall(int longDistanceCall) {
+        this.longDistanceCall = longDistanceCall;
     }
 
     public int getTraffic() {
@@ -130,8 +130,19 @@ public class Phone implements Comparable<Phone> {
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Object clone() {
+        Phone phone;
+        try {
+            phone = (Phone) super.clone();
+        } catch (CloneNotSupportedException e) {
+            phone = new Phone(
+                    this.getSurname(), this.getFirstName(), this.getPatronymic(), this.getAddress(), this.getTelephoneNumber(),
+                    this.getCreditCardNumber(), this.getDebit(), this.getCredit(), this.getInnerCityCall(), this.getLongDistanceCall(),
+                    this.getTraffic());
+        }
+        phone.address = (Address) this.address.clone();
+        return phone;
+
     }
 
     public int compareTo(Phone p) {
@@ -147,22 +158,22 @@ public class Phone implements Comparable<Phone> {
                 "Кредитная карта: " + creditCardNumber + '\n' +
                 "Дебет: " + debit + '\n' +
                 "Кредит: " + credit + '\n' +
-                "Внутрисетевые звонки: " + timeLocalCall + '\n' +
-                "За пределами сети: " + timeNoLocalCall + '\n' +
-                "Траффик: " + traffic + "мб";
+                "Внутригородские звонки: " + innerCityCall + '\n' +
+                "Междугородние звонки: " + longDistanceCall + '\n' +
+                "Траффик: " + traffic + " мб";
     }
 
-    static class Address {
+    static class Address implements Cloneable {
         private String country;
         private String city;
         private String street;
         private String buildNumb;
-        private int appNumb;
+        private String appNumb;
 
         public Address() {
         }
 
-        public Address(String country, String city, String street, String buildNumb, int appNumb) {
+        public Address(String country, String city, String street, String buildNumb, String appNumb) {
             this.country = country;
             this.city = city;
             this.street = street;
@@ -202,12 +213,22 @@ public class Phone implements Comparable<Phone> {
             this.buildNumb = buildNumb;
         }
 
-        public int getAppNumb() {
+        public String getAppNumb() {
             return appNumb;
         }
 
-        public void setAppNumb(int appNumb) {
+        public void setAppNumb(String appNumb) {
             this.appNumb = appNumb;
+        }
+
+        @Override
+        public Object clone() {
+            try {
+                return super.clone();
+            } catch (CloneNotSupportedException e) {
+                return new Address(this.getCountry(), this.getCity(), this.getStreet(), getBuildNumb(), getAppNumb());
+            }
+
         }
 
         @Override
