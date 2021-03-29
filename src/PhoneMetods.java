@@ -1,8 +1,11 @@
 
 public interface PhoneMetods {
-    void getCustomersUsedNoLocalCall();
 
-    void getCustomersUsedNoLocalCallMoreThan(int time);
+    void getCustomersUsedlongDistanceCall() throws CloneNotSupportedException;
+
+    void getCustomersUsedInnerCityMoreThan(int time) throws CloneNotSupportedException;
 
     void sortCustomerByName() throws CloneNotSupportedException;
+
+    void getCustomersWithBiggestTraffic() throws CloneNotSupportedException;
 }
