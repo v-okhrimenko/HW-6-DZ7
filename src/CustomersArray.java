@@ -6,6 +6,11 @@ public class CustomersArray implements PhoneMetods, Cloneable {
     private static int id = 0;
 
     public void saveCustomer(Phone phone) {
+        if (id == 10000) {
+            System.out.println("Невозможно добвать " + phone.getSurname() + " " +
+                    phone.getFirstName() + " " + phone.getPatronymic() + ". Массив полон!");
+            return;
+        }
         if (Objects.nonNull(phone)) {
             if (Objects.nonNull(phone.getSurname())) {
                 phone.setId(id);
@@ -21,12 +26,13 @@ public class CustomersArray implements PhoneMetods, Cloneable {
     }
 
     @Override
-    public void getCustomersUsedNoLocalCall() {
-        Phone[] temp = getCustomersArrayWithoutNull();
-        System.out.println("Cведения об абонентах, которые пользовались междугородной связью: ");
+    public void getCustomersUsedlongDistanceCall() {
+        Phone[] temp = getCloneCustomersArrayWithoutNull();
+
+        System.out.println("\nCведения об абонентах, которые пользовались междугородной связью: \n");
         for (int i = 0; i < id; i++) {
             if (Objects.nonNull(temp[i])) {
-                if (temp[i].getTimeNoLocalCall() > 0) {
+                if (temp[i].getLongDistanceCall() > 0) {
                     System.out.println(temp[i]);
                     System.out.println("________________________");
                 }
@@ -35,11 +41,11 @@ public class CustomersArray implements PhoneMetods, Cloneable {
     }
 
     @Override
-    public void getCustomersUsedNoLocalCallMoreThan(int time) {
-        System.out.println("Cведения об абонентах, у которых время внутригородских разговоров превышает " + time + ":");
-        for (Phone phoneCustomers : getCustomersArrayWithoutNull()) {
+    public void getCustomersUsedInnerCityMoreThan(int time) {
+        System.out.println("\nCведения об абонентах, у которых время внутригородских разговоров превышает " + time + ":\n");
+        for (Phone phoneCustomers : getCloneCustomersArrayWithoutNull()) {
             if (Objects.nonNull(phoneCustomers)) {
-                if (phoneCustomers.getTimeLocalCall() > time) {
+                if (phoneCustomers.getInnerCityCall() > time) {
                     System.out.println(phoneCustomers);
                     System.out.println("________________________");
                 }
@@ -49,8 +55,8 @@ public class CustomersArray implements PhoneMetods, Cloneable {
 
     @Override
     public void sortCustomerByName() {
-        System.out.println("Cведения об абонентах в алфавитном порядке (по фамилии): ");
-        Phone[] sortedCustomersByName = getCustomersArrayWithoutNull();
+        System.out.println("\nCведения об абонентах в алфавитном порядке (по фамилии): \n");
+        Phone[] sortedCustomersByName = getCloneCustomersArrayWithoutNull();
         Arrays.sort(sortedCustomersByName);
         for (Phone phone : sortedCustomersByName) {
             System.out.println(phone);
@@ -58,12 +64,44 @@ public class CustomersArray implements PhoneMetods, Cloneable {
         }
     }
 
-    private Phone[] getCustomersArrayWithoutNull() {
+    private Phone[] getCloneCustomersArrayWithoutNull() {
         Phone[] noNullArray = new Phone[id];
         if (id >= 0) {
-            System.arraycopy(customersArray, 0, noNullArray, 0, id);
+            for (int i = 0; i < id; i++) {
+                if (Objects.nonNull(customersArray[i])) {
+                    noNullArray[i] = (Phone) customersArray[i].clone();
+                }
+            }
         }
         return noNullArray;
     }
 
+    @Override
+    public void getCustomersWithBiggestTraffic() {
+        Phone[] customers = new Phone[id];
+        Phone[] temp = getCloneCustomersArrayWithoutNull();
+
+        int counter = 0;
+        int index = 0;
+        int max = 0;
+
+        System.out.println("\nCведения об первых 10 абонентов у который самый большой трафик интернета: \n");
+        while (counter < 10) {
+            for (int i = 0; i < temp.length; i++) {
+                if (Objects.nonNull(temp[i])) {
+                    if (max < temp[i].getTraffic()) {
+                        max = temp[i].getTraffic();
+                        index = i;
+                    }
+                }
+            }
+            customers[counter] = temp[index];
+            temp[index] = null;
+            System.out.println(customers[counter]);
+            System.out.println("________________________");
+            index = 0;
+            max = 0;
+            counter++;
+        }
+    }
 }
