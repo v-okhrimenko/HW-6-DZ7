@@ -22,7 +22,6 @@ public class CustomersArray implements PhoneMetods, Cloneable {
         } else {
             System.out.println("Не возможно сохранить NULL");
         }
-
     }
 
     @Override
@@ -34,7 +33,6 @@ public class CustomersArray implements PhoneMetods, Cloneable {
             if (Objects.nonNull(temp[i])) {
                 if (temp[i].getLongDistanceCall() > 0) {
                     System.out.println(temp[i]);
-                    System.out.println("________________________");
                 }
             }
         }
@@ -60,7 +58,6 @@ public class CustomersArray implements PhoneMetods, Cloneable {
         Arrays.sort(sortedCustomersByName);
         for (Phone phone : sortedCustomersByName) {
             System.out.println(phone);
-            System.out.println("________________________");
         }
     }
 
@@ -77,7 +74,7 @@ public class CustomersArray implements PhoneMetods, Cloneable {
     }
 
     @Override
-    public void getCustomersWithBiggestTraffic() {
+    public void getFirstTenCustomersWithBiggestTraffic() {
         Phone[] customers = new Phone[id];
         Phone[] temp = getCloneCustomersArrayWithoutNull();
 
@@ -98,7 +95,6 @@ public class CustomersArray implements PhoneMetods, Cloneable {
             customers[counter] = temp[index];
             temp[index] = null;
             System.out.println(customers[counter]);
-            System.out.println("________________________");
             index = 0;
             max = 0;
             counter++;

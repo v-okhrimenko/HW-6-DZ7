@@ -97,7 +97,7 @@ public abstract class RandomCustomer {
 
         return new Phone(fam[getRandom(fam.length)], nam[getRandom(nam.length)], otch[getRandom(otch.length)], address,
                 getRandomTelephone(), generateRandomCreditCard(), generateRandomDigits(8), generateRandomDigits(8),
-                generateRandomDigits(8), generateRandomDigits(8), generateRandomDigits(6));
+                generateRandomDigits(2), generateRandomDigits(1), generateRandomDigits(6));
     }
 
 }

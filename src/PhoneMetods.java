@@ -7,5 +7,5 @@ public interface PhoneMetods {
 
     void sortCustomerByName() throws CloneNotSupportedException;
 
-    void getCustomersWithBiggestTraffic() throws CloneNotSupportedException;
+    void getFirstTenCustomersWithBiggestTraffic() throws CloneNotSupportedException;
 }

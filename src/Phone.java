@@ -160,7 +160,8 @@ public class Phone implements Comparable<Phone>, Cloneable {
                 "Кредит: " + credit + '\n' +
                 "Внутригородские звонки: " + innerCityCall + '\n' +
                 "Междугородние звонки: " + longDistanceCall + '\n' +
-                "Траффик: " + traffic + " мб";
+                "Траффик: " + traffic + " мб" + '\n' +
+                "_______________________________________\n";
     }
 
     static class Address implements Cloneable {
