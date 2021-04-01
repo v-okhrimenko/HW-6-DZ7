@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Objects;
 
-public class CustomersArray implements PhoneMetods, Cloneable {
+public class Customers implements PhoneInterface, Cloneable {
     private final static Phone[] customersArray = new Phone[10000];
     private static int id = 0;
 

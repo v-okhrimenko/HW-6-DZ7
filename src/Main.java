@@ -1,5 +1,5 @@
 public class Main {
-    private static final CustomersArray customersArray = new CustomersArray();
+    private static final Customers customersArray = new Customers();
 
     public static void main(String[] args) {
 

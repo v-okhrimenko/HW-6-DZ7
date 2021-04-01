@@ -1,5 +1,5 @@
 
-public interface PhoneMetods {
+public interface PhoneInterface {
 
     void getCustomersUsedlongDistanceCall() throws CloneNotSupportedException;
 
